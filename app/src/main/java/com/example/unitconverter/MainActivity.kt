@@ -33,9 +33,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.unitconverter.ui.theme.UnitConverterTheme
 import kotlin.math.roundToInt
 
@@ -59,13 +63,19 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun UnitConverter() {
     var inputValue by remember { mutableStateOf("") }
-    var outputValue by remember { mutableStateOf("") }
+    var outputValue by remember { mutableStateOf("0") }
     var inputUnit by remember { mutableStateOf("Meters") }
     var outputUnit by remember { mutableStateOf("Meters") }
     var iExpanded by remember { mutableStateOf(false) }
     var oExpanded by remember { mutableStateOf(false) }
     val iConversionFactor = remember { mutableDoubleStateOf(1.0) }
     val oConversionFactor = remember { mutableDoubleStateOf(1.0) }
+
+    val customTextStyle = TextStyle(
+        fontFamily = FontFamily.Monospace,
+        fontSize = 32.sp,
+        color = Color.Green
+    )
 
     fun convertUnits() {
         // ?: = elvis operator
@@ -82,7 +92,10 @@ fun UnitConverter() {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         // Here all the UI element will be stacked below each other
-        Text("Unit Converter")
+        Text(
+            "Unit Converter",
+            style = customTextStyle
+        )
         Spacer(modifier = Modifier.height(16.dp))
         OutlinedTextField(
             value = inputValue,
@@ -203,7 +216,11 @@ fun UnitConverter() {
             }
         }
         Spacer(modifier = Modifier.height(16.dp))
-        Text("Result: $outputValue $outputUnit")
+        // Result text
+        Text(
+            "Result: $outputValue $outputUnit",
+            style = MaterialTheme.typography.headlineMedium
+        )
     }
 }
 
